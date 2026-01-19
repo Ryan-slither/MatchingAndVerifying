@@ -1,14 +1,15 @@
-def  matchingEngine(hospital_prefs, student_prefs):
-    n = len(hospital_prefs)
-    hospitals_matched = [-1] * n
-    student_next_pref = [] * n
+import sys
 
-    hospital_ranks = [[0] * n for _ in range(n)]
-    for hospitals in range(n):
-        for rank, students in enumerate(hospital_prefs[hospitals]):
-            hospital_ranks[hospitals][students] = rank
+from src.matcher_b import generateMatchings
+from io_lib.parser import Parser
 
+if __name__ == "__main__":
+    arg_count = len(sys.argv)
+    if arg_count != 2:
+        raise RuntimeError("Must specify an input file path")
 
+    input_file = sys.argv[1]
+    p = Parser()
+    p.parse_input_file(input_file)
 
-
-
+    print(generateMatchings(p.n, p.preferences_a, p.preferences_b))

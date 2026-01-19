@@ -1,8 +1,8 @@
 class Parser:
     def __init__(self):
-        self.n = None
-        self.preferences_a = None
-        self.preferences_b = None
+        self.n = 0
+        self.preferences_a = [[]]
+        self.preferences_b = [[]]
 
     def parse_input_file(self, file_name: str):
         with open(file_name, "r") as file:
