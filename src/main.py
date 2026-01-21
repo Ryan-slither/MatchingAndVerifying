@@ -1,7 +1,7 @@
 import sys
 
-from src.matcher_b import generateMatchings
 from io_lib.parser import Parser
+from matcher_b import generateMatchings
 
 if __name__ == "__main__":
     arg_count = len(sys.argv)

@@ -1,8 +1,11 @@
+from collections import deque
+
+
 def generateMatchings(
     n: int, prefs_arr_a: list[list[int]], prefs_arr_b: list[list[int]]
 ):
-    matchings_h = [0] * n
-    matchings_a = [0] * n
+    hospital_pairs = [-1] * n
+    applicant_pairs = [-1] * n
 
     hospitals_arr_b: list[list[int]] = []
     # Preferences array b indexed by hospital to get preference rather than hospital
@@ -13,40 +16,59 @@ def generateMatchings(
 
         hospitals_arr_b.append(hospitals_by_preference)
 
-    for i in range(n):
-        h = i + 1
-        h_prefs = prefs_arr_a[i]
-        for j in range(n):
-            match = matchings_h[i]
-            a = h_prefs[j]
-            h_prime = matchings_a[a - 1]
+    pairs: dict[int, deque[int]] = dict()
+    for hospital, hospital_prefs in enumerate(prefs_arr_a):
+        possible_pairs = deque()
+        for applicant in hospital_prefs:
+            possible_pairs.append(applicant)
 
-            if match == a:
-                continue
+        pairs[hospital] = possible_pairs
 
-            if h_prime == 0:
-                if matchings_h[i] != 0:
-                    matchings_a[matchings_h[i] - 1] = 0
+    matched = 0
+    hospital = 0
+    while matched < n:
+        if hospital >= n:
+            hospital = 0
 
-                matchings_h[i] = a
-                matchings_a[a - 1] = h
+        if len(pairs[hospital]) == 0:
+            hospital += 1
+            continue
 
-            elif hospitals_arr_b[a - 1][h - 1] < hospitals_arr_b[a - 1][h_prime - 1]:
-                a_prime = matchings_h[h_prime - 1]
-                if a_prime != 0:
-                    matchings_a[a_prime - 1] = 0
+        applicant = pairs[hospital].popleft() - 1
+        print(applicant)
 
-                matchings_h[h_prime - 1] = 0
+        if applicant_pairs[applicant] == -1:
+            print("initial")
+            past_applicant = hospital_pairs[hospital]
+            if past_applicant != -1:
+                applicant_pairs[hospital_pairs[hospital]] = -1
+            else:
+                matched += 1
 
-                matchings_h[i] = a
-                matchings_a[a - 1] = h
+            hospital_pairs[hospital] = applicant
+            applicant_pairs[applicant] = hospital
 
-        zero_count = 0
-        for h in matchings_h:
-            if h == 0:
-                zero_count += 1
+        elif (
+            hospitals_arr_b[applicant][hospital]
+            < hospitals_arr_b[applicant][applicant_pairs[applicant]]
+        ):
+            print("switched")
+            if (
+                hospital_pairs[applicant_pairs[applicant]] != -1
+                and hospital_pairs[hospital] != -1
+            ):
+                matched -= 1
 
-        if zero_count == 0:
-            break
+            applicant_pairs[hospital_pairs[hospital]] = -1
+            hospital_pairs[applicant_pairs[applicant]] = -1
+            hospital_pairs[hospital] = applicant
+            applicant_pairs[applicant] = hospital
 
-    return matchings_h
+        hospital += 1
+
+        print(pairs)
+        print(hospital_pairs)
+        print(applicant_pairs)
+        print()
+
+    return hospital_pairs
