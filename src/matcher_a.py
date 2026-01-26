@@ -1,10 +1,10 @@
-def  matchingEngine(hospital_prefs, student_prefs, n):
+def matchingEngine(hospital_prefs, student_prefs, n):
     n = len(hospital_prefs)
-    hospitals_match = {h: None for h in range(1, n+1)}
-    student_match = {s: None for s in range(1, n+1)}
-    next_pref = {h: 0 for h in range(1, n+1)}
+    hospitals_match = {h: -1 for h in range(1, n + 1)}
+    student_match = {s: -1 for s in range(1, n + 1)}
+    next_pref = {h: 0 for h in range(1, n + 1)}
 
-    free_hospitals = list(range(1, n+1))
+    free_hospitals = list(range(1, n + 1))
 
     while free_hospitals:
         h = free_hospitals.pop(0)
@@ -12,13 +12,13 @@ def  matchingEngine(hospital_prefs, student_prefs, n):
         prefs = hospital_prefs[h]
         i = next_pref[h]
 
-        if i>=n:
+        if i >= n:
             continue
-        
+
         s = prefs[i]
         next_pref[h] += 1
 
-        if student_match[s] is None:
+        if student_match[s] == -1:
             hospitals_match[h] = s
             student_match[s] = h
         else:
@@ -28,7 +28,7 @@ def  matchingEngine(hospital_prefs, student_prefs, n):
                 hospitals_match[h] = s
                 student_match[s] = h
 
-                hospitals_match[h_old] = None
+                hospitals_match[h_old] = -1
                 free_hospitals.append(h_old)
             else:
                 free_hospitals.append(h)
