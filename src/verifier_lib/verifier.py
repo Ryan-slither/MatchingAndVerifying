@@ -22,6 +22,8 @@ def match_verifier(hospitals_match, n):
                 "ERROR: Invalid pairing of hospital to students as student ID falls out of scope"
             )
             return False
+        
+    print("VALID")
 
     return True
 

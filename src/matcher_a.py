@@ -1,4 +1,11 @@
 def matchingEngine(hospital_prefs, student_prefs, n):
+    student_rank = {}
+    for s in range(1, n + 1):
+        rank = {}
+        for i, h in enumerate(student_prefs[s]):
+            rank[h] = i
+        student_rank[s] = rank
+
     n = len(hospital_prefs)
     hospitals_match = {h: -1 for h in range(1, n + 1)}
     student_match = {s: -1 for s in range(1, n + 1)}
@@ -24,7 +31,7 @@ def matchingEngine(hospital_prefs, student_prefs, n):
         else:
             h_old = student_match[s]
 
-            if student_prefs[s][h] < student_prefs[s][h_old]:
+            if student_rank[s][h] < student_rank[s][h_old]:
                 hospitals_match[h] = s
                 student_match[s] = h
 

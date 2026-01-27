@@ -2,6 +2,7 @@ import sys
 
 from io_lib.parser import Parser
 from matcher_b import generateMatchings
+from matcher_a import matchingEngine
 from verifier_lib.verifier import match_verifier, stability_verifier
 
 
@@ -18,21 +19,15 @@ if __name__ == "__main__":
     hospital_prefs = {i + 1: p.preferences_a[i] for i in range(n)}
     student_prefs = {i + 1: p.preferences_b[i] for i in range(n)}
 
-    matching = generateMatchings(n, hospital_prefs, student_prefs)
-
-    final_matching = {
-        h + 1: (matching[h] + 1 if matching[h] != -1 else -1)
-        for h in range(n)
-    }
-
+    matching = matchingEngine(hospital_prefs, student_prefs, n)
 
     for h in range(1, n + 1):
-        print(h, final_matching[h])
+        print(h, matching[h])
 
-    if not match_verifier(final_matching, n):
+    if not match_verifier(matching, n):
         sys.exit(1)
 
-    if stability_verifier(final_matching, hospital_prefs, student_prefs, n):
+    if stability_verifier(matching, hospital_prefs, student_prefs, n):
         print("VALID STABLE")
     else:
         print("UNSTABLE")
