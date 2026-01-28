@@ -31,16 +31,16 @@ def stability_verifier(
     hospital_prefs: dict[int, list[int]],
     student_prefs: dict[int, list[int]],
 ):
-    print("Matches:", hospitals_match)
+    # print("Matches:", hospitals_match)
     for hospital, hospital_pref_list in hospital_prefs.items():
-        print("Curr Hospital:", hospital)
-        print("Curr Hospital Pref:", hospital_pref_list)
+        # print("Curr Hospital:", hospital)
+        # print("Curr Hospital Pref:", hospital_pref_list)
         for preferred_student in hospital_pref_list:
             if preferred_student == hospitals_match[hospital]:
                 break
 
             for preferred_hospital in student_prefs[preferred_student]:
-                print("Curr Pref Hospital:", preferred_hospital)
+                # print("Curr Pref Hospital:", preferred_hospital)
                 if (
                     preferred_hospital == hospitals_match[hospital]
                     or hospitals_match[preferred_hospital] == preferred_student

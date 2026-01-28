@@ -4,7 +4,10 @@ from io_lib.output import write_to_file
 from io_lib.parser import Parser
 from matcher_a import matchingEngine
 from matcher_b import generateMatchings
+from scalability_lib.scalability import view_scalability
 from verifier_lib.verifier import match_verifier, stability_verifier
+
+N_VALUES = [pow(2, i) for i in range(1, 14)]
 
 if __name__ == "__main__":
     arg_count = len(sys.argv)
@@ -24,7 +27,7 @@ if __name__ == "__main__":
 
     for h in range(1, n + 1):
         print(h, matching[h])
-        
+
     write_to_file("output.out", matching)
 
     if not match_verifier(matching, n):
@@ -37,3 +40,6 @@ if __name__ == "__main__":
         print("STABLE")
     else:
         print("UNSTABLE")
+        sys.exit(1)
+
+    view_scalability(N_VALUES)
