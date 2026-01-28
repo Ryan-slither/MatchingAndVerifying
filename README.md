@@ -13,7 +13,7 @@ To set up the repo and install dependencies:
 - `python -m venv .venv`
 - `pip install -r requirements.txt`
 
-To run the matcher and verifier: `python src/main.py data/input6.in`
+To run the matcher and verifier (the graph may take a little bit to load): `python src/main.py data/input6.in`
 
 This will output the matches to the terminal and the `data/output.out` file, and log if it is valid and stable to the console
 

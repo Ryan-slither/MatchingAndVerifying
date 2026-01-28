@@ -7,7 +7,7 @@ from matcher_b import generateMatchings
 from scalability_lib.scalability import view_scalability
 from verifier_lib.verifier import match_verifier, stability_verifier
 
-N_VALUES = [pow(2, i) for i in range(1, 14)]
+N_VALUES = [pow(2, i) for i in range(1, 12)]
 
 if __name__ == "__main__":
     arg_count = len(sys.argv)
@@ -22,8 +22,8 @@ if __name__ == "__main__":
     hospital_prefs = {i + 1: p.preferences_a[i] for i in range(n)}
     student_prefs = {i + 1: p.preferences_b[i] for i in range(n)}
 
-    # matching = matchingEngine(hospital_prefs, student_prefs, n)
-    matching = generateMatchings(p.n, p.preferences_a, p.preferences_b)
+    matching = matchingEngine(hospital_prefs, student_prefs, n)
+    # matching = generateMatchings(p.n, p.preferences_a, p.preferences_b)
 
     for h in range(1, n + 1):
         print(h, matching[h])
