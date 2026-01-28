@@ -22,34 +22,32 @@ def match_verifier(hospitals_match, n):
                 "ERROR: Invalid pairing of hospital to students as student ID falls out of scope"
             )
             return False
-        
-    print("VALID")
 
     return True
 
 
 def stability_verifier(
-    hospitals_match: dict[int, int], hospital_prefs, student_prefs, n
+    hospitals_match: dict[int, int],
+    hospital_prefs: dict[int, list[int]],
+    student_prefs: dict[int, list[int]],
 ):
-    for hospital, applicant in hospitals_match.items():
-        h_set = set()
-        a_set = set()
-        h_prefs = hospital_prefs[hospital]
-        a_prefs = student_prefs[applicant]
-
-        for h_pref in h_prefs:
-            if h_pref == applicant:
+    print("Matches:", hospitals_match)
+    for hospital, hospital_pref_list in hospital_prefs.items():
+        print("Curr Hospital:", hospital)
+        print("Curr Hospital Pref:", hospital_pref_list)
+        for preferred_student in hospital_pref_list:
+            if preferred_student == hospitals_match[hospital]:
                 break
 
-            h_set.add(h_pref)
+            for preferred_hospital in student_prefs[preferred_student]:
+                print("Curr Pref Hospital:", preferred_hospital)
+                if (
+                    preferred_hospital == hospitals_match[hospital]
+                    or hospitals_match[preferred_hospital] == preferred_student
+                ):
+                    break
 
-        for a_pref in a_prefs:
-            if a_pref == hospital:
-                break
-
-            a_set.add(a_pref)
-
-        if len(a_set.intersection(h_set)) != 0:
-            return False
+                if preferred_hospital == hospital:
+                    return False
 
     return True

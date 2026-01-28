@@ -40,11 +40,59 @@ def test_verifier_1():
     }
 
     assert match_verifier(matchings, n)
-    assert stability_verifier(matchings, hospital_prefs, applicant_prefs, n)
+    assert stability_verifier(matchings, hospital_prefs, applicant_prefs)
 
     assert match_verifier(matchings_incorrect, n)
-    assert not stability_verifier(
-        matchings_incorrect, hospital_prefs, applicant_prefs, n
-    )
+    assert not stability_verifier(matchings_incorrect, hospital_prefs, applicant_prefs)
 
     assert not match_verifier(matchings_with_holes, n)
+
+
+def test_verifier_2():
+    n = 3
+
+    hospital_prefs = {
+        1: [1, 2, 3],
+        2: [2, 3, 1],
+        3: [2, 1, 3],
+    }
+
+    applicant_prefs = {
+        1: [2, 1, 3],
+        2: [1, 2, 3],
+        3: [1, 2, 3],
+    }
+
+    matchings = {
+        1: 1,
+        2: 3,
+        3: 2,
+    }
+
+    assert match_verifier(matchings, n)
+    assert not stability_verifier(matchings, hospital_prefs, applicant_prefs)
+
+
+def test_verifier_3():
+    n = 3
+
+    hospital_prefs = {
+        1: [1, 2, 3],
+        2: [3, 1, 2],
+        3: [1, 2, 3],
+    }
+
+    applicant_prefs = {
+        1: [3, 1, 2],
+        2: [1, 2, 3],
+        3: [2, 1, 3],
+    }
+
+    matchings = {
+        1: 2,
+        2: 3,
+        3: 1,
+    }
+
+    assert match_verifier(matchings, n)
+    assert stability_verifier(matchings, hospital_prefs, applicant_prefs)

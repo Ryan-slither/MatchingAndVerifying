@@ -30,45 +30,28 @@ def generateMatchings(
         if hospital >= n:
             hospital = 0
 
-        if len(pairs[hospital]) == 0:
+        if len(pairs[hospital]) == 0 or hospital_pairs[hospital] != -1:
             hospital += 1
             continue
 
         applicant = pairs[hospital].popleft() - 1
-        print(applicant)
 
         if applicant_pairs[applicant] == -1:
-            print("initial")
-            past_applicant = hospital_pairs[hospital]
-            if past_applicant != -1:
-                applicant_pairs[hospital_pairs[hospital]] = -1
-            else:
-                matched += 1
-
             hospital_pairs[hospital] = applicant
             applicant_pairs[applicant] = hospital
+            matched += 1
 
         elif (
             hospitals_arr_b[applicant][hospital]
             < hospitals_arr_b[applicant][applicant_pairs[applicant]]
         ):
-            print("switched")
-            if (
-                hospital_pairs[applicant_pairs[applicant]] != -1
-                and hospital_pairs[hospital] != -1
-            ):
-                matched -= 1
-
-            applicant_pairs[hospital_pairs[hospital]] = -1
             hospital_pairs[applicant_pairs[applicant]] = -1
             hospital_pairs[hospital] = applicant
             applicant_pairs[applicant] = hospital
 
+        else:
+            continue
+
         hospital += 1
 
-        print(pairs)
-        print(hospital_pairs)
-        print(applicant_pairs)
-        print()
-
-    return hospital_pairs
+    return {i + 1: j + 1 for i, j in enumerate(hospital_pairs)}
