@@ -11,6 +11,7 @@ The expected input and output files are in `data/input6.in` and `data/output6.ou
 To set up the repo and install dependencies:
 
 - `python -m venv .venv`
+- `source .venv/bin/activate`
 - `pip install -r requirements.txt`
 
 To run the matcher and verifier (the graph may take a little bit to load): `python src/main.py data/input6.in`
