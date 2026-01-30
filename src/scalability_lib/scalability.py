@@ -60,8 +60,6 @@ def view_scalability(n_values):
 
         times_c.append(total_time_c / 2)
 
-    # print(times_a, times_b, times_c)
-
     plt.plot(n_values, times_a, marker="o", label="Matcher A")
     plt.plot(n_values, times_b, marker="o", label="Matcher B")
     plt.plot(n_values, times_c, marker="o", label="Verifier")

@@ -23,7 +23,6 @@ if __name__ == "__main__":
     student_prefs = {i + 1: p.preferences_b[i] for i in range(n)}
 
     matching = matchingEngine(hospital_prefs, student_prefs, n)
-    # matching = generateMatchings(p.n, p.preferences_a, p.preferences_b)
 
     for h in range(1, n + 1):
         print(h, matching[h])

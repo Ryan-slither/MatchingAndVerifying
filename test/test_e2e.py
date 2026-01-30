@@ -30,7 +30,4 @@ def test_e2e_1():
                 "test_output.out", matching, preferences_a, preferences_b, "UNSTABLE"
             )
             assert False
-
-        # write_to_file(
-        #     "test_output.out", matching, preferences_a, preferences_b, "CORRECT"
-        # )
+            
